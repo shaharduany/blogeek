@@ -5,9 +5,8 @@ import User from "../../../lib/db/models/User";
 async function signup(req, res) {
   if (req.method === "POST") {
     console.log("in signup post");
-    let client;
     try {
-        client = await getClient();
+        await getClient();
     } catch (error){
         console.log(error);
         res.status(500).json({
@@ -27,8 +26,6 @@ async function signup(req, res) {
         message: "Inputs are invalids or email in use",
       });
       console.log(`!verify || checkDups`);
-
-      await client.disconnect();
       return;
     }
 
@@ -42,6 +39,7 @@ async function signup(req, res) {
     }
 
     try {
+
       let user = new User(vals);
       user.save();
 
@@ -52,8 +50,6 @@ async function signup(req, res) {
       res.status(500).json({ message: "Could not register you" });
       console.log(error);
     }
-
-    await client.disconnect();
     console.log("left signup post");
   }
 }
@@ -70,7 +66,7 @@ async function checkDuplicatedEmails(email) {
     const user = await User.findOne({ email: email });
     return user;
   } catch (error) {
-    return true;
+    console.log(error);
   }
 }
 
