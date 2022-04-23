@@ -5,8 +5,10 @@ import getClient from "../../../lib/db/db";
 import User from "../../../lib/db/models/User";
 import { comparePassword } from "../../../lib/hashing";
 
+const secret = process.env.SECRET;
+
 export default NextAuth({
-  secret: "thisisweirdiHopeItWorks",
+  secret,
   session: {
     strategy: "jwt",
     maxAge: 60 * 80 * 24 * 3, //3 days
@@ -30,9 +32,7 @@ export default NextAuth({
         }
 
         const passwordValid = await comparePassword(password, user.password);
-        console.log(`password > ${password}
-        \n user.password > ${user.password}
-        \n passwordValid > ${passwordValid}`);
+       
         if (!passwordValid) {
           throw new Error("Password is incorrect");
         }

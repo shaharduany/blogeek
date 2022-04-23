@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react';
 import { Fragment } from 'react';
 
-export default function Home() {
+function HomePage() {
   const { data: session } = useSession();
   
   
@@ -9,5 +9,7 @@ export default function Home() {
     <Fragment>
       <h2>blabla</h2>
     </Fragment>
-    )
+    );
 }
+
+export default HomePage;
