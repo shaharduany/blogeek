@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import getClient from "../../../lib/db/db";
-import User from '../../../lib/db/models/User';
+import User from "../../../lib/db/models/User";
 import { comparePassword } from "../../../lib/hashing";
 
 export default NextAuth({
@@ -20,11 +20,27 @@ export default NextAuth({
         "https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline&response_type=code",
     }),
     CredentialsProvider({
-      async authorize(credentials, req) {
+      async authorize(credentials) {
+        await getClient();
         const { email, password } = credentials;
+
+        const user = await User.findOne({ email });
+        if (!user) {
+          throw new Error("User not found");
+        }
+
+        const passwordValid = await comparePassword(password, user.password);
+        console.log(`password > ${password}
+        \n user.password > ${user.password}
+        \n passwordValid > ${passwordValid}`);
+        if (!passwordValid) {
+          throw new Error("Password is incorrect");
+        }
+
         return {
           email,
-        }
+          id: user._id,
+        };
       },
     }),
   ],

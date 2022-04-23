@@ -1,5 +1,7 @@
 import axios from "axios";
 import { Fragment, useRef } from "react";
+import { signIn } from 'next-auth/react';
+
 
 function JoinPage(props) {
   const emailInputRef = useRef();
@@ -14,18 +16,15 @@ function JoinPage(props) {
 
     const email = loginEmailRef.current.value;
     const password = loginPwRef.current.value;
-
-    const values = {
+    
+    const obj = {
       email,
       password,
+      redirect: false,
     };
-    const headers = {
-      "Content-Type" : "application/json",
-    };
+    const result = await signIn('credentials', obj);
 
-    const res = await axios.post("/api/auth/signin", values, { headers, });
-    
-    console.log(res);
+    console.log(result);
   }
 
   const submitRegisterHandler = async (event) => {

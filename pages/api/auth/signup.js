@@ -28,18 +28,14 @@ async function signup(req, res) {
       console.log(`!verify || checkDups`);
       return;
     }
-
+    const hashedPw = await hashPassword(password);
     let vals = {
       email,
-      password,
-    };
-
-    if (username !== "") {
-      vals.username = username;
+      password: hashedPw,
+      username,
     }
 
     try {
-
       let user = new User(vals);
       user.save();
 
