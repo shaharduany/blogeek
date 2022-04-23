@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Fragment, useRef } from "react";
 
 function JoinPage(props) {
@@ -5,7 +6,29 @@ function JoinPage(props) {
   const usernameInputRef = useRef();
   const passwordInputRef = useRef();
 
-  const submitHandler = async (event) => {
+  const loginPwRef = useRef();
+  const loginEmailRef = useRef();
+
+  const submitLoginHandler = async (e) => {
+    e.preventDefault();
+
+    const email = loginEmailRef.current.value;
+    const password = loginPwRef.current.value;
+
+    const values = {
+      email,
+      password,
+    };
+    const headers = {
+      "Content-Type" : "application/json",
+    };
+
+    const res = await axios.post("/api/auth/signin", values, { headers, });
+    
+    console.log(res);
+  }
+
+  const submitRegisterHandler = async (event) => {
     event.preventDefault();
     const email = emailInputRef.current.value;
     const password = passwordInputRef.current.value;
@@ -31,7 +54,7 @@ function JoinPage(props) {
   };
   return (
     <Fragment>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={submitRegisterHandler}>
         <label htmlFor="email">Enter your email</label>
         <input id="email" type={"email"} ref={emailInputRef} />
         <label htmlFor="username">Enter your username</label>
@@ -39,6 +62,16 @@ function JoinPage(props) {
         <label htmlFor="password">Enter your password</label>
         <input id="password" type="password" ref={passwordInputRef} />
         <button type="submit">SUBMIT</button>
+      </form>
+      <hr />
+      <form onSubmit={submitLoginHandler}>
+        <label htmlFor="lemail">Email: </label>
+        <input id="lemail" type="email" ref={loginEmailRef} />
+        <br />
+        <label htmlFor="lpassword">Password </label>
+        <input id="lpssowrd" type="password" ref={loginPwRef} />
+        <br />
+        <button type="submit">SIGN IN</button>
       </form>
     </Fragment>
   );
