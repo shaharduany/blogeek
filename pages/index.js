@@ -7,7 +7,8 @@ function HomePage() {
   
   return (
     <Fragment>
-      <h2>blabla</h2>
+      <h1>Welcome to BloGeek</h1>
+      <h3>Number one blog for geeks</h3>
     </Fragment>
     );
 }

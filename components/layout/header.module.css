@@ -1,0 +1,24 @@
+.header{
+    width: 100%;
+    padding: 10px;
+    color: white;
+    background-color: rgb(47, 39, 39);
+}
+
+.links{
+    list-style-type: none;
+    display: flex;
+}
+
+.links li{
+    padding: 10px;
+}
+
+.homelinks{
+    display: flex;
+    margin: auto;
+}
+
+.loglinks{
+    display: flex;
+}
