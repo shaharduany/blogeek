@@ -1,0 +1,12 @@
+.footer_div{
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    background-color: rgb(47, 39, 39);
+}
+
+.footer_div address{
+    display: inline;
+}

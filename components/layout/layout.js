@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { Fragment } from "react";
+import Footer from "./footer";
 import Header from "./Header";
 
 function Layout(props) {
@@ -15,6 +16,7 @@ function Layout(props) {
       <main>
           {props.children}
       </main>
+      <Footer />
     </Fragment>
   );
 }
