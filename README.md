@@ -10,3 +10,6 @@ nothing to see right now...
 3. Mongoose
 4. NextAuth
 5. Axios
+
+## todos:
+1. Make the switch from mongoose to mongodb
