@@ -32,7 +32,7 @@ async function handler(req, res){
     try{
         post = addPost(user._id, title, content);
         user.posts.push(post._id);
-        user.save();
+        await user.save();
     } catch(error){
         res.status(422).json({ message: "Something went wrong saving the post" });
         console.log(error);

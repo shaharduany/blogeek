@@ -3,7 +3,9 @@ function PostComp(props) {
   const content = props.content;
   const publisher = props.publisher;
   const date = new Date(props.date).toLocaleTimeString();
-  if (!title || !date || !comment || !content) {
+  const id = props.id;
+
+  if (!title || !date || !content || !content) {
     return (
       <div>
         <h1>bla</h1>
