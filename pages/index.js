@@ -27,15 +27,15 @@ function HomePage(props) {
       <h3>Number one blog for geeks</h3>
       <PostBar />
       {posts.map((value, index) => (
-        <div>
+        <div key={index}>
           <PostComp
             title={value.title}
             id={value.id}
             content={value.content}
             publisher={value.publisher}
             date={value.date}
-            key={index}
           />
+          <hr />
         </div>
       ))}
     </Fragment>
