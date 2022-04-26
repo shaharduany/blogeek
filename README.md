@@ -12,4 +12,5 @@ nothing to see right now...
 5. Axios
 
 ## todos:
-1. Make the switch from mongoose to mongodb
+1. Save post's ID at the posts array of the publisher's user
+2. Save user ID at the client, then use it for the post and all

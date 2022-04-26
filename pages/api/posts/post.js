@@ -1,6 +1,5 @@
-import getClient from "../../../lib/db/db";
+import getClient, { addPost } from "../../../lib/db/db";
 import User from '../../../lib/db/models/User';
-import Posts from '../../../lib/db/models/Post';
 
 async function handler(req, res){
     await getClient();
@@ -31,20 +30,15 @@ async function handler(req, res){
     }
 
     try{
-        post = new Posts({
-            publisher: id,
-            title,
-            content,
-        });
-        await post.save();
-        
+        post = addPost(user._id, title, content);
         user.posts.push(post._id);
-        await user.save();
+        user.save();
     } catch(error){
         res.status(422).json({ message: "Something went wrong saving the post" });
+        console.log(error);
         return;
     }
-
+    
     res.status(201).json({
         message: "Ppst saved"
     });
