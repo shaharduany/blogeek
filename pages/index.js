@@ -10,8 +10,6 @@ function HomePage(props) {
 
   const error = props.error;
 
-  console.log(posts);
-
   if (error) {
     return (
       <Fragment>
@@ -34,6 +32,7 @@ function HomePage(props) {
             content={value.content}
             publisher={value.publisher}
             date={value.date}
+            comments={value.comments}
           />
           <hr />
         </div>

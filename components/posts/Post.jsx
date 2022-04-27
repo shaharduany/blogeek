@@ -1,23 +1,24 @@
 import { useRouter } from "next/router";
 
 function PostComp(props) {
-    const router = useRouter();
+  const router = useRouter();
 
-    const title = props.title;
+  const title = props.title;
   const content = props.content;
   const publisher = props.publisher;
   const date = new Date(props.date).toLocaleString();
-    const id = props.id;
-    
-  const postClickHanlder = async(e) => {
-    e.preventDefault();
-    router.push(`/posts/${id}`);
-  }
+  const id = props.id;
+  const comments = props.comments;
 
-  if (!title || !date || !content || !content) {
+  const postClickHanlder = async (e) => {
+    e.preventDefault();
+    router.push(`/post/${id}`);
+  };
+
+  if (!title || !date || !content || !content || !comments) {
     return (
       <div>
-        <h1>bla</h1>
+        <h1>PostComp wasn't well writtent</h1>
       </div>
     );
   }
@@ -28,6 +29,7 @@ function PostComp(props) {
       <h5>{publisher}</h5>
       <p>{content}</p>
       <time>{date}</time>
+      <p>Comments: {comments.length}</p>
     </div>
   );
 }
