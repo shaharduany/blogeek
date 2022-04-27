@@ -10,7 +10,6 @@ function PostPage(props){
 }
 
 export async function getStaticProps(context){
-
     return {
         props: {
             message: "hello"
