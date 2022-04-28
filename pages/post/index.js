@@ -1,11 +1,36 @@
 import axios from "axios";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import PostComp from "../../components/posts/Post";
 import { getRecentPosts } from "../../lib/db/db";
+import Button from "../../components/ui/Button";
 
 function PostPage(props) {
-	let posts = props.posts;
+	const [posts, setPosts] = useState(props.posts);
 	const [page, setPage] = useState(1);
+	
+	useEffect(() => {
+		const req = {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ page }),
+		};
+		fetch("/api/posts/request-posts", req)
+			.then((req) => req.json())
+			.then((data) => console.log(data));
+	}, [page]);
+
+	const previousClickHandler = async (e) => {
+		e.preventDefault();
+		if (page > 1) {
+			setPage(page - 1);
+		}
+	};
+
+	const nextClickHandler = async (e) => {
+		setPage(page + 1);
+	};
 
 	return (
 		<Fragment>
@@ -23,6 +48,11 @@ function PostPage(props) {
 						/>
 					</div>
 				))}
+			<div>
+				<Button onClick={previousClickHandler}>PREV</Button>
+				<p>{page}</p>
+				<Button onClick={nextClickHandler}>NEXT</Button>
+			</div>
 		</Fragment>
 	);
 }
@@ -31,7 +61,6 @@ export async function getStaticProps(context) {
 	let posts = await getRecentPosts();
 	posts = JSON.parse(posts);
 
-    
 	return {
 		props: {
 			posts,
