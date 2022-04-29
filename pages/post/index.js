@@ -7,18 +7,26 @@ import Button from "../../components/ui/Button";
 function PostPage(props) {
 	const [posts, setPosts] = useState(props.posts);
 	const [page, setPage] = useState(1);
-	
+	const [loaded, setLoaded] = useState(true);
+
 	useEffect(() => {
-		const req = {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ page }),
-		};
-		fetch("/api/posts/request-posts", req)
-			.then((req) => req.json())
-			.then((data) => console.log(data));
+		if (!loaded) {
+			const req = {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ page }),
+			};
+			fetch("/api/posts/request-posts", req)
+				.then((req) => req.json())
+				.then((data) => {
+					setPosts(JSON.parse(data.posts));
+				})
+				.catch((err) => console.log(err));
+		}
+
+		setLoaded(false);
 	}, [page]);
 
 	const previousClickHandler = async (e) => {
@@ -49,9 +57,9 @@ function PostPage(props) {
 					</div>
 				))}
 			<div>
-				<Button onClick={previousClickHandler}>PREV</Button>
+				{page > 1 && <Button onClick={previousClickHandler}>PREV</Button>}
 				<p>{page}</p>
-				<Button onClick={nextClickHandler}>NEXT</Button>
+				{posts.length == 10 && <Button onClick={nextClickHandler}>NEXT</Button>}
 			</div>
 		</Fragment>
 	);
