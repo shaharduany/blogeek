@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Fragment, useState, useEffect } from "react";
 import PostComp from "../../components/posts/Post";
 import { getRecentPosts } from "../../lib/db/db";
@@ -29,16 +28,10 @@ function PostPage(props) {
 		setLoaded(false);
 	}, [page]);
 
-	const previousClickHandler = async (e) => {
+	const loadClickHandler = async (e) => {
 		e.preventDefault();
-		if (page > 1) {
-			setPage(page - 1);
-		}
-	};
-
-	const nextClickHandler = async (e) => {
-		setPage(page + 1);
-	};
+		setPage(page++);
+	}
 
 	return (
 		<Fragment>
@@ -57,9 +50,9 @@ function PostPage(props) {
 					</div>
 				))}
 			<div>
-				{page > 1 && <Button onClick={previousClickHandler}>PREV</Button>}
-				<p>{page}</p>
-				{posts.length == 10 && <Button onClick={nextClickHandler}>NEXT</Button>}
+				{posts.length % 10 === 0 && 
+				<Button onClick={loadClickHandler}>LOAD MORE</Button>
+				}
 			</div>
 		</Fragment>
 	);
