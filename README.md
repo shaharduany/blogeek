@@ -2,8 +2,12 @@
 
 ## UNDER CONSTRUCTION
 
-nothing to see right now...
- z
+Single page, Reddit imitation web application.
+
+Focuses on Search Engine Optimization using getStaticProps and getServerSideProps.
+Main views programmed to update rendering every 30-60 seconds for optimized search engines and detailed views are rendered at the server prior to be sent to client.
+The functionality is basic but I used it to demonstrate the SEO and practice Next.js framework and it's NextAuth libraries.
+
 ## Libraries:
 1. Next.js
 2. React
