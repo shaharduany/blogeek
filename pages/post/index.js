@@ -5,33 +5,31 @@ import Button from "../../components/ui/Button";
 
 function PostPage(props) {
 	const [posts, setPosts] = useState(props.posts);
-	const [page, setPage] = useState(1);
-	const [loaded, setLoaded] = useState(true);
-
-	useEffect(() => {
-		if (!loaded) {
-			const req = {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ page }),
-			};
-			fetch("/api/posts/request-posts", req)
-				.then((req) => req.json())
-				.then((data) => {
-					setPosts(JSON.parse(data.posts));
-				})
-				.catch((err) => console.log(err));
-		}
-
-		setLoaded(false);
-	}, [page]);
+	const [page, setPage] = useState(2);
+	const [flag, setFlag] = useState(true);
 
 	const loadClickHandler = async (e) => {
 		e.preventDefault();
-		setPage(page++);
-	}
+		setPage(page + 1);
+		const requestBody = {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ page }),
+		};
+
+		const req = await fetch("/api/posts/request-posts", requestBody);
+		const data = await req.json();
+
+		const recPosts = JSON.parse(data.posts);
+
+		if(recPosts.length === posts.length){
+			setFlag(false);
+		} else {
+			setPosts(recPosts);
+		}
+	};
 
 	return (
 		<Fragment>
@@ -49,11 +47,7 @@ function PostPage(props) {
 						/>
 					</div>
 				))}
-			<div>
-				{posts.length % 10 === 0 && 
-				<Button onClick={loadClickHandler}>LOAD MORE</Button>
-				}
-			</div>
+			<div>{flag && <Button onClick={loadClickHandler}>LOAD MORE</Button>}</div>
 		</Fragment>
 	);
 }
