@@ -22,7 +22,7 @@ The functionality is basic but I used it to demonstrate the SEO and practice Nex
 3. Node version 16 needs to be installed
 
 ## todos:
-1. add comments routes
+1. Fix JWT
 
 > Author: Shahar Duany 
 > Contact: shahar.duany@gmail.com

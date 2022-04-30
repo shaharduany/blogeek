@@ -6,8 +6,9 @@ const SECRET = process.env.SECRET;
 
 async function handler(req, res) {
 	const { email, postId, content } = req.body;
-	const validRequest = await validateRequest(req);
+    const validRequest = await validateRequest(req);
 
+    
 	if (!validRequest) {
 		res.status(401).json({
 			message: "Unauthorized request",
@@ -39,9 +40,10 @@ async function handler(req, res) {
 }
 
 async function validateRequest(req) {
-	const auth = await getToken(req, SECRET);
+    const auth = await getToken({ req, SECRET });
+
 	const METHOD = req.method;
-	if (method !== "POST" || !auth) {
+	if (METHOD !== "POST" || !auth) {
 		return false;
 	}
 	return true;
@@ -58,8 +60,8 @@ async function getUserAndPost(email, postId) {
 		};
 	} catch (error) {
 		return {
-            post: false,
-            publisher: false
+			post: false,
+			publisher: false,
 			error,
 		};
 	}

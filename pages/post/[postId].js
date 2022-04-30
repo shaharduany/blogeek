@@ -1,11 +1,40 @@
 import { useRouter } from "next/router";
+import CommentForm from "../../components/posts/CommentFrom";
+import PostComp from "../../components/posts/Post";
+import PostView from "../../components/posts/PostView";
+import { getPost } from "../../lib/db/db";
 
 function SinglePostPage(props){
-    const router = useRouter();
+    const post = JSON.parse(props.post);
+    
+    console.log(post);
+    
+    if(props.error){
+        console.log(props.error);
+        return <h1>error</h1>
+    }
+    return (<div>
+        <PostView post={post} />
+        <CommentForm postId={post.id} />
+    </div>);
+}
 
-    console.log(router.query);
+export async function getServerSideProps(context){
+    let post = {};
+    let error = false;
+    try {
+        post = await getPost(context.query.postId);
+    } catch (err) {
+        error = err;
+    }
 
-    return (<h1>Params page</h1>);
+    return {
+        props: {
+            query: context.query.postId,
+            post: JSON.stringify(post),
+            error
+        }
+    }
 }
 
 export default SinglePostPage;
