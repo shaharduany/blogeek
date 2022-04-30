@@ -1,8 +1,21 @@
+import { getToken } from "next-auth/jwt";
 import getClient, { addPost } from "../../../lib/db/db";
 import User from '../../../lib/db/models/User';
 
+const SECRET = process.env.SECRET;
+
 async function handler(req, res){
     await getClient();
+    
+    const auth = await getToken({ req }, SECRET);
+
+    if(!auth){
+        res.status(401).json({
+            message: "Unauthorized request",
+            signedIn: false,
+        });
+        return;
+    }
 
     const METHOD = req.method;
     if(METHOD !== "POST"){

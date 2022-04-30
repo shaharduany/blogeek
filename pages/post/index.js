@@ -2,6 +2,7 @@ import { Fragment, useState, useEffect } from "react";
 import PostComp from "../../components/posts/Post";
 import { getRecentPosts } from "../../lib/db/db";
 import Button from "../../components/ui/Button";
+import PostBar from "../../components/posts/PostBar";
 
 function PostPage(props) {
 	const [posts, setPosts] = useState(props.posts);
@@ -34,6 +35,9 @@ function PostPage(props) {
 	return (
 		<Fragment>
 			<h1>POST PAGE</h1>
+			<div>
+				<PostBar />
+			</div>
 			{posts &&
 				posts.map((value, index) => (
 					<div key={index}>
