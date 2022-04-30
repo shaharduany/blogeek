@@ -14,10 +14,15 @@ The functionality is basic but I used it to demonstrate the SEO and practice Nex
 3. Mongoose
 4. NextAuth
 5. Axios
+6. Node version 16
 
 ## Setup:
 1. at lib/db/ - create a file called db-credentials where you put the db's credentials and export it as default
 2. at .env.local file add a secret thing
+3. Node version 16 needs to be installed
 
 ## todos:
 1. add comments routes
+
+> Author: Shahar Duany 
+> Contact: shahar.duany@gmail.com
