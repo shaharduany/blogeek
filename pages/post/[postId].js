@@ -2,12 +2,11 @@ import { useRouter } from "next/router";
 import CommentForm from "../../components/posts/CommentFrom";
 import PostComp from "../../components/posts/Post";
 import PostView from "../../components/posts/PostView";
-import { getPost } from "../../lib/db/db";
+import getClient, { getPost } from "../../lib/db/db";
 
 function SinglePostPage(props){
     const post = JSON.parse(props.post);
     
-    console.log(post);
     
     if(props.error){
         console.log(props.error);
@@ -20,6 +19,7 @@ function SinglePostPage(props){
 }
 
 export async function getServerSideProps(context){
+    await getClient();
     let post = {};
     let error = false;
     try {

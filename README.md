@@ -22,7 +22,8 @@ The functionality is basic but I used it to demonstrate the SEO and practice Nex
 3. Node version 16 needs to be installed
 
 ## todos:
-1. Fix JWT
+1. Add getSession at client side rendering
+2. Add API route protection at /api/posts/post
 
 > Author: Shahar Duany 
 > Contact: shahar.duany@gmail.com

@@ -1,13 +1,16 @@
-import { getToken } from "next-auth/jwt";
+import { getSession } from "next-auth/react";
 import User from "../../../lib/db/models/User";
 import Posts from "../../../lib/db/models/Post";
 import Comment from "../../../lib/db/models/Comment";
+import getClient from "../../../lib/db/db";
+
 const SECRET = process.env.SECRET;
 
 async function handler(req, res) {
-	const { email, postId, content } = req.body;
+	await getClient();
+    const { email, postId, content } = req.body;
     const validRequest = await validateRequest(req);
-
+    const auth = await getSession({ req });
     
 	if (!validRequest) {
 		res.status(401).json({
@@ -18,7 +21,7 @@ async function handler(req, res) {
 
 	const { publisher, post, error } = await getUserAndPost(email, postId);
 
-	if (!user || !post || error) {
+	if (!publisher || !post || error) {
 		res.status(500).json({
 			message: "Could not get user or post",
 			error,
@@ -40,13 +43,13 @@ async function handler(req, res) {
 }
 
 async function validateRequest(req) {
-    const auth = await getToken({ req, SECRET });
+    const auth = await getSession({ req, SECRET });
 
 	const METHOD = req.method;
-	if (METHOD !== "POST" || !auth) {
-		return false;
+	if (METHOD === "POST" && auth) {
+		return true;
 	}
-	return true;
+	return false;
 }
 
 async function getUserAndPost(email, postId) {
@@ -67,10 +70,10 @@ async function getUserAndPost(email, postId) {
 	}
 }
 
-async function createComment(publisher, post, content) {
+async function createComment(sender, post, content) {
 	try {
 		let comment = new Comment({
-			publisher,
+			sender,
 			post,
 			content,
 		});
