@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import styles from './PostComp.module.scss';
 
 function PostComp(props) {
   const router = useRouter();
@@ -24,12 +25,20 @@ function PostComp(props) {
   }
 
   return (
-    <div onClick={postClickHanlder}>
-      <h3>{title}</h3>
-      <h5>{publisher}</h5>
-      <p>{content}</p>
-      <time>{date}</time>
-      <p>Comments: {comments.length}</p>
+    <div className={styles.post} onClick={postClickHanlder}>
+      <div className={styles.titleDiv}>
+        <h3>{title}</h3>
+      </div>
+      <div className={styles.publisherDiv}>
+        <h5>{publisher}</h5>
+        <time>{date}</time>
+      </div>
+      <div className={styles.contentDiv}>
+        <p>{content}</p>
+      </div>
+      <div className={styles.commentsDiv}>
+        <p>Comments: {comments.length}</p>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,30 @@
+.outterDiv{
+    .inputsDiv {
+        padding: 30px;
+    }
+    .titleDiv {
+        label {
+            margin: 15px;
+            font-size: larger;
+        }
+        input {
+            font-size: larger;
+        }
+    }
+    .contentDiv{
+        display: block;
+        label{
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            font-size: large;
+        }
+        textarea{
+            width: 50%;
+        }
+    }
+    .buttonDiv{
+        display: inline-block;
+        justify-content: center;
+    }
+}

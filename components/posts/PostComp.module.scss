@@ -1,0 +1,32 @@
+$font-title: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+$font-author: 'Times New Roman', Times, serif;
+$font-content: Arial, Helvetica, sans-serif;
+
+
+.post {
+    padding: 30px;
+
+    .titleDiv{
+        font-stretch: expanded;
+        font-family: $font-title;
+    } 
+    
+    .publisherDiv{
+        font-family: $font-author;
+        display: inline-block;
+        padding: 15px;
+        h5 {
+            display: inline;
+            margin-right: 30px;
+        }
+    }
+
+    .contentDiv{
+        font-size: large;
+        font-family: $font-content;
+    }
+    
+    .cmmmentsDiv{
+        font-weight: 150;
+    }
+}
