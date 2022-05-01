@@ -33,6 +33,7 @@ async function handler(req, res) {
 		await createComment(publisher, post, content);
 		res.status(201).json({
 			saved: true,
+            message: "Tour comment was posted",
 		});
 	} catch (error) {
 		res.status(500).json({
@@ -82,7 +83,7 @@ async function createComment(sender, post, content) {
         const postDb = await Posts.findById(post);
         postDb.comments.push(comment._id);
         await postDb.save();
-        
+
 	} catch (error) {
 		throw error;
 	}

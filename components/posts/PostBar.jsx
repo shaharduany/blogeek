@@ -1,19 +1,23 @@
 import { useSession } from "next-auth/react";
 import { useRef } from "react";
+import { useState } from "react";
 import Button from "../ui/Button";
 import styles from "./PostBar.module.scss";
 
 function PostBar(props) {
-	const { data: session, status } = useSession();
+  const [message, setMessage] = useState();
+	const session = props.session;
 	const titleInputRef = useRef();
 	const contentInputRef = useRef();
 
 	const submitHandler = async (e) => {
 		e.preventDefault();
-		if (!session) {
-			console.log("!session");
-			return;
-		}
+
+    if(!session){
+      setMessage("You must first log in to post a message");
+      return;
+    }
+
 		const title = titleInputRef.current.value;
 		const content = contentInputRef.current.value;
 		const email = session.user.email;
@@ -35,10 +39,12 @@ function PostBar(props) {
 		});
 
 		const data = await req.json();
-		console.log(data);
+		setMessage(data.message);
 	};
+
 	return (
 		<div className={styles.outterDiv}>
+      {message && <h5>{message}</h5>}
 			<form onSubmit={submitHandler}>
 				<div className={styles.inputsDiv}>
 					<div className={styles.titleDiv}>

@@ -1,13 +1,26 @@
 import axios from "axios";
+import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useRef } from "react"
+import { useState } from "react/cjs/react.production.min";
 import Button from "../../components/ui/Button";
 
 function SignupPage(props){
+    const router = useRouter();
+
+    const [message, setMessage] = useState();
+    const session = props.session;
+
     const usernameInputRef = useRef();
     const emailInputRef = useRef();
     const passwordInputRef = useRef();
-
+    
+    if(session){
+        return (<div>
+            <h1>You're already a signed in member</h1>
+        </div>);
+    }
+    
     const submitHandler = async (e) => {
         e.preventDefault();
         
@@ -26,7 +39,12 @@ function SignupPage(props){
         };
         try {
             const res = await axios.post("/api/auth/signup", obj, { headers, });
-            console.log(res);
+            setMessage(res.message);
+            if(res.created){
+                setTimeout(() => {
+                    router.push("/login");
+                }, 3000)
+            }
         } catch (error) {
             console.log(error);
         }
@@ -35,6 +53,7 @@ function SignupPage(props){
     return (
         <div>
             <h1>SIGN UP</h1>
+            {message && <h5>{message}</h5>}
             <form onSubmit={submitHandler}>
                 <label htmlFor="username">Enter your username</label>
                 <input id="username" type="text" ref={usernameInputRef} />
@@ -57,6 +76,16 @@ function SignupPage(props){
             </form>
         </div>
     )    
+}
+
+export async function getServerSideProps(context){
+    const session = await getSession(context);
+
+    return {
+        props: {
+            session
+        }
+    };
 }
 
 export default SignupPage;

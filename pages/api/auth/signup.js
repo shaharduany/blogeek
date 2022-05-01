@@ -41,6 +41,7 @@ async function signup(req, res) {
 
       res.status(201).json({
         message: "User created",
+        created: true,
       });
     } catch (error) {
       res.status(500).json({ message: "Could not register you" });

@@ -6,8 +6,8 @@ import PostBar from "../components/posts/PostBar";
 import getClient, { getRecentPosts } from "../lib/db/db";
 
 function HomePage(props) {
+  const { data: session, status } = useSession();
   const posts = props.posts;
-
   const error = props.error;
 
   if (error) {
@@ -23,7 +23,7 @@ function HomePage(props) {
     <Fragment>
       <h1>Welcome to BloGeek</h1>
       <h3>Number one blog for geeks</h3>
-      <PostBar />
+      <PostBar session={session}/>
       {posts.map((value, index) => (
         <div key={index}>
           <PostComp
