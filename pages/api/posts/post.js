@@ -1,4 +1,4 @@
-import { getToken } from "next-auth/jwt";
+import { getSession } from "next-auth/react";
 import getClient, { addPost } from "../../../lib/db/db";
 import User from '../../../lib/db/models/User';
 
@@ -7,7 +7,7 @@ const SECRET = process.env.SECRET;
 async function handler(req, res){
     await getClient();
     
-    const auth = await getToken({ req }, SECRET);
+    const auth = await getSession({ req, SECRET });
 
     if(!auth){
         res.status(401).json({
