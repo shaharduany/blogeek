@@ -78,6 +78,11 @@ async function createComment(sender, post, content) {
 			content,
 		});
 		await comment.save();
+
+        const postDb = await Posts.findById(post);
+        postDb.comments.push(comment._id);
+        await postDb.save();
+        
 	} catch (error) {
 		throw error;
 	}

@@ -42,6 +42,7 @@ function HomePage(props) {
 }
 
 export async function getStaticProps(context) {
+  await getClient();
   let posts = await getRecentPosts();
   let error = false;
 

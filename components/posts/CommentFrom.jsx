@@ -1,10 +1,8 @@
-import { useSession } from "next-auth/react";
 import { useRef } from "react";
 import Button from "../ui/Button";
 
 function CommentForm(props){
-    const { data: session, status } = useSession();
-
+    const session = props.session;
     const contentInputRef = useRef();
     const postId = props.postId;
 
